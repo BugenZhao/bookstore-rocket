@@ -1,21 +1,15 @@
+#![feature(decl_macro)]
+
 #[macro_use]
 extern crate diesel;
-
-use db::{establish_connection, models::Book, schema};
-use diesel::prelude::*;
+#[macro_use]
+extern crate rocket;
 
 mod db;
-
-fn get_programming_books() -> Vec<Book> {
-    use schema::books::dsl::*;
-    let conn = establish_connection();
-    books
-        .order(price.desc())
-        .filter(type_.eq_all("编程"))
-        .load::<Book>(&conn)
-        .unwrap()
-}
+mod handler;
+mod router;
 
 fn main() {
-    println!("{:#?}", get_programming_books());
+    dotenv::dotenv().unwrap();
+    router::create_app().launch();
 }

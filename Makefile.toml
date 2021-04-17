@@ -10,7 +10,7 @@ dependencies = ["install-diesel"]
 
 [tasks.models-generate]
 command = "diesel_ext"
-args = ["--map", "Double f64", "--import-types", "crate::db::schema::*" ]
+args = ["--map", "Double f64", "-I", "crate::db::schema::*", "-I", "serde_derive::*", "-d", "Queryable, Debug, Serialize" ]
 dependencies = ["install-diesel", "install-diesel-ext"]
 
 [tasks.install-drivers]

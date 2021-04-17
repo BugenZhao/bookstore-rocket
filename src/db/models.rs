@@ -3,9 +3,10 @@
 #![allow(unused)]
 #![allow(clippy::all)]
 
-use super::schema::*;
+use crate::db::schema::*;
+use serde_derive::*;
 
-#[derive(Queryable, Debug, Identifiable)]
+#[derive(Queryable, Debug, Serialize, Identifiable)]
 pub struct Book {
     pub id: i32,
     pub isbn: String,
@@ -18,7 +19,7 @@ pub struct Book {
     pub image: String,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
+#[derive(Queryable, Debug, Serialize, Identifiable)]
 #[primary_key(user_id)]
 pub struct UserAuth {
     pub user_id: i32,
@@ -27,7 +28,7 @@ pub struct UserAuth {
     pub user_type: i32,
 }
 
-#[derive(Queryable, Debug, Identifiable)]
+#[derive(Queryable, Debug, Serialize, Identifiable)]
 #[primary_key(user_id)]
 pub struct User {
     pub user_id: i32,

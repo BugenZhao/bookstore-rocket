@@ -4,9 +4,8 @@ pub mod schema;
 use diesel::prelude::*;
 use std::env;
 
+// TODO: connection pool
 pub fn establish_connection() -> SqliteConnection {
-    dotenv::dotenv().unwrap();
-
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     SqliteConnection::establish(&database_url)
         .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
