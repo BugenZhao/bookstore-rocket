@@ -1,0 +1,23 @@
+[tasks.migration-run]
+command = "diesel"
+args = ["migration", "run"]
+dependencies = ["install-diesel"]
+
+[tasks.migration-generate]
+command = "diesel"
+args = ["migration", "generate", "bookstore"]
+dependencies = ["install-diesel"]
+
+[tasks.models-generate]
+command = "diesel_ext"
+args = ["--map", "Double f64", "--import-types", "crate::db::schema::*" ]
+dependencies = ["install-diesel", "install-diesel-ext"]
+
+[tasks.install-drivers]
+script = "sudo apt install libsqlite3-dev libpq-dev libmysqlclient-dev"
+
+[tasks.install-diesel]
+install_crate = { crate_name = "diesel_cli", binary = "diesel", test_arg = "--help" }
+
+[tasks.install-diesel-ext]
+install_crate = { crate_name = "diesel_cli_ext", binary = "diesel_ext", test_arg = "--help" }

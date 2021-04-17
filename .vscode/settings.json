@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "bookstore",
+            "database": "./resources/bookstore.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
