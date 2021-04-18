@@ -8,6 +8,7 @@ extern crate rocket;
 mod db;
 mod handler;
 mod router;
+mod cors;
 
 fn main() {
     dotenv::dotenv().unwrap();
