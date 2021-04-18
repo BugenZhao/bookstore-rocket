@@ -5,10 +5,10 @@ extern crate diesel;
 #[macro_use]
 extern crate rocket;
 
+mod cors;
 mod db;
 mod handler;
 mod router;
-mod cors;
 
 fn main() {
     dotenv::dotenv().unwrap();
