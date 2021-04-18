@@ -3,13 +3,15 @@ use rocket_contrib::json::Json;
 
 use crate::db::{establish_connection, models::Book, schema};
 use diesel::prelude::*;
+use std::collections::HashMap;
 
 #[get("/")]
-pub fn get_all_books() -> Result<Json<Vec<Book>>, Status> {
+pub fn get_all_books() -> Result<Json<HashMap<i32, Book>>, Status> {
     use schema::books::dsl::*;
     let conn = establish_connection();
     books
         .load::<Book>(&conn)
+        .map(|bs| bs.into_iter().map(|b| (b.id, b)).collect::<HashMap<_, _>>())
         .map(Json)
         .map_err(|_e| Status::InternalServerError)
 }
