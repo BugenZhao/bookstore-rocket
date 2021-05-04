@@ -2,14 +2,14 @@ use rocket::http::Status;
 use rocket_contrib::json::Json;
 
 use crate::{
-    auth::User,
+    auth::AuthedUser,
     db::{models::Book, schema, DbConn},
 };
 use diesel::prelude::*;
 use std::collections::HashMap;
 
 #[get("/")]
-pub fn get_all_books(conn: DbConn, _user: User) -> Result<Json<HashMap<i32, Book>>, Status> {
+pub fn get_all_books(conn: DbConn, _user: AuthedUser) -> Result<Json<HashMap<i32, Book>>, Status> {
     use schema::books::dsl::*;
     books
         .load::<Book>(&*conn)
@@ -19,7 +19,7 @@ pub fn get_all_books(conn: DbConn, _user: User) -> Result<Json<HashMap<i32, Book
 }
 
 #[get("/<book_id>")]
-pub fn get_book(book_id: i32, conn: DbConn, _user: User) -> Result<Json<Book>, Status> {
+pub fn get_book(book_id: i32, conn: DbConn, _user: AuthedUser) -> Result<Json<Book>, Status> {
     use schema::books::dsl::*;
     books
         .find(book_id)
