@@ -11,7 +11,7 @@ pub struct Book {
     pub id: i32,
     pub isbn: String,
     pub name: String,
-    pub type_: String,
+    pub r#type: String,
     pub author: String,
     pub price: f64,
     pub description: String,
