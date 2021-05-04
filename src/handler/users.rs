@@ -28,6 +28,6 @@ pub fn logout(mut cookies: Cookies) -> Result<(), Status> {
 }
 
 #[get("/check")]
-pub fn check(user: User) -> Result<String, Status> {
-    Ok(user.name)
+pub fn check(user: User) -> Result<Json<String>, Status> {
+    Ok(Json(user.name))
 }

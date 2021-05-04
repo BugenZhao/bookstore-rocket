@@ -13,7 +13,7 @@ impl Fairing for CORS {
     }
 
     fn on_response(&self, _request: &Request, response: &mut Response) {
-        response.set_header(Header::new("Access-Control-Allow-Origin", "*"));
+        response.set_header(Header::new("Access-Control-Allow-Origin", "http://localhost:3000"));
         response.set_header(Header::new(
             "Access-Control-Allow-Methods",
             "POST, GET, PATCH, OPTIONS",
