@@ -4,7 +4,10 @@
 extern crate diesel;
 #[macro_use]
 extern crate rocket;
+#[macro_use]
+extern crate serde_derive;
 
+mod auth;
 mod cors;
 mod db;
 mod handler;
