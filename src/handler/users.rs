@@ -1,8 +1,10 @@
+use std::collections::HashMap;
+
 use rocket::http::{Cookie, Cookies, Status};
 use rocket_contrib::json::Json;
 
 use crate::{
-    auth::AuthedUser,
+    auth::{AdminUser, AuthedUser},
     db::{models::UserAuth, schema, DbConn},
 };
 use diesel::prelude::*;
@@ -42,6 +44,23 @@ pub fn check(user: AuthedUser) -> Result<Json<AuthedUser>, Status> {
     Ok(Json(user))
 }
 
+#[get("/")]
+pub fn get_all_users(
+    conn: DbConn,
+    _admin: AdminUser,
+) -> Result<Json<HashMap<i32, AuthedUser>>, Status> {
+    use schema::user_auths::dsl::*;
+    user_auths
+        .load::<UserAuth>(&*conn)
+        .map(|uas| {
+            uas.into_iter()
+                .map(|ua| (ua.user_id, AuthedUser::from(&ua)))
+                .collect::<HashMap<_, _>>()
+        })
+        .map(Json)
+        .map_err(|_e| Status::InternalServerError)
+}
+
 #[derive(Deserialize)]
 pub struct RegisterInfo {
     username: String,
@@ -63,6 +82,8 @@ pub fn register(
     if already_exists {
         return Err(Status::BadRequest);
     }
+
+    // TODO: real register
 
     let guest = user_auths
         .filter(username.eq("guest"))
