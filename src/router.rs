@@ -18,5 +18,13 @@ pub fn create_app() -> rocket::Rocket {
             routes![users::login, users::check, users::logout, users::register],
         )
         .mount("/carousels/", routes![carousels::get_carousels])
-        .mount("/cart/", routes![cart::get_cart, cart::put_cart])
+        .mount(
+            "/cart/",
+            routes![
+                cart::get_cart,
+                cart::put_a_book,
+                cart::delete_books,
+                cart::empty_cart
+            ],
+        )
 }
