@@ -9,8 +9,8 @@ pub fn create_app() -> rocket::Rocket {
         .manage(Carts::default())
         .attach(CORS)
         .mount(
-            "/static/",
-            StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/static")),
+            "/resources/",
+            StaticFiles::from(concat!(env!("CARGO_MANIFEST_DIR"), "/resources")),
         )
         .mount("/books/", routes![books::get_all_books, books::get_book])
         .mount(
