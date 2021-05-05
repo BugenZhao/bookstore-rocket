@@ -41,3 +41,39 @@ pub fn logout(mut cookies: Cookies) -> Result<(), Status> {
 pub fn check(user: AuthedUser) -> Result<Json<AuthedUser>, Status> {
     Ok(Json(user))
 }
+
+#[derive(Deserialize)]
+pub struct RegisterInfo {
+    username: String,
+    password: String,
+}
+
+#[post("/register", data = "<info>")]
+pub fn register(
+    info: Json<RegisterInfo>,
+    conn: DbConn,
+    mut cookies: Cookies,
+) -> Result<(), Status> {
+    use schema::user_auths::dsl::*;
+    let already_exists = user_auths
+        .filter(username.eq(&info.username))
+        .get_result::<UserAuth>(&*conn)
+        .is_ok();
+
+    if already_exists {
+        return Err(Status::BadRequest);
+    }
+
+    let guest = user_auths
+        .filter(username.eq("guest"))
+        .get_result::<UserAuth>(&*conn)
+        .ok();
+
+    match guest {
+        Some(user_auth) => {
+            cookies.add_private(Cookie::new("user_id", user_auth.user_id.to_string()));
+            Ok(())
+        }
+        None => Err(Status::Unauthorized), // TODO: report error
+    }
+}

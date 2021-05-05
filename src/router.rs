@@ -8,6 +8,6 @@ pub fn create_app() -> rocket::Rocket {
         .mount("/books", routes![books::get_all_books, books::get_book])
         .mount(
             "/users/",
-            routes![users::login, users::check, users::logout],
+            routes![users::login, users::check, users::logout, users::register],
         )
 }
