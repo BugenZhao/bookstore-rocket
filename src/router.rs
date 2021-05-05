@@ -30,7 +30,8 @@ pub fn create_app() -> rocket::Rocket {
                 cart::get_cart,
                 cart::put_a_book,
                 cart::delete_books,
-                cart::empty_cart
+                cart::empty_cart,
+                cart::checkout,
             ],
         )
 }

@@ -74,3 +74,9 @@ pub fn empty_cart(carts: State<Carts>, user: AuthedUser) -> Result<(), Status> {
     carts.remove(&user);
     Ok(())
 }
+
+#[post("/checkout")]
+pub fn checkout(carts: State<Carts>, user: AuthedUser) -> Result<(), Status> {
+    empty_cart(carts, user)
+    // TODO: add to orders
+}
