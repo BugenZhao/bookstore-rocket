@@ -413,3 +413,9 @@ CREATE TABLE `user_auths` (
 -- ----------------------------
 INSERT INTO `user_auths`
 VALUES ('1', 'thunderboy', 'reins1409', '0');
+INSERT INTO `user_auths`
+VALUES ('2', 'guest', 'guest', '1');
+INSERT INTO `user_auths`
+VALUES ('3', 'admin', 'admin', '0');
+INSERT INTO `user_auths`
+VALUES ('4', 'bugen', 'bugen', '0');

@@ -27,7 +27,7 @@ pub fn login(info: Json<LoginInfo>, conn: DbConn, mut cookies: Cookies) -> Resul
             cookies.add_private(Cookie::new("user_id", user_auth.user_id.to_string()));
             Ok(())
         }
-        None => Err(Status::Forbidden), // TODO: report error
+        None => Err(Status::Unauthorized), // TODO: report error
     }
 }
 
