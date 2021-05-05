@@ -4,7 +4,7 @@ use rocket::{http::Status, request::FromRequest, Outcome};
 use crate::db::DbConn;
 use crate::db::{models::UserAuth, schema};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct AuthedUser {
     pub username: String,
     pub user_type: i32,

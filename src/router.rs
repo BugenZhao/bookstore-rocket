@@ -1,11 +1,12 @@
 use rocket_contrib::serve::StaticFiles;
 
-use crate::handler::*;
+use crate::handler::{cart::Carts, *};
 use crate::{cors::CORS, db::init_pool};
 
 pub fn create_app() -> rocket::Rocket {
     rocket::ignite()
         .manage(init_pool())
+        .manage(Carts::default())
         .attach(CORS)
         .mount(
             "/static/",
@@ -17,4 +18,5 @@ pub fn create_app() -> rocket::Rocket {
             routes![users::login, users::check, users::logout, users::register],
         )
         .mount("/carousels/", routes![carousels::get_carousels])
+        .mount("/cart/", routes![cart::get_cart, cart::put_cart])
 }
